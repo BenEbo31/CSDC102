@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 #include <thread>
@@ -15,7 +16,7 @@ using namespace std;
     void typeText(string text){
         for(char c : text){
             cout << c << flush;
-            this_thread::sleep_for(chrono::milliseconds(250));
+            this_thread::sleep_for(chrono::milliseconds(100));
         }
     }
 
@@ -51,6 +52,7 @@ using namespace std;
     
 int main(){
     int key, choice;
+    char choice2;
     
     Legends octane;
         octane.name             = "Octane";
@@ -211,9 +213,54 @@ int main(){
             cout << "\nEnter any key to Enter the Battle!: ";
             cin >> key;
             
+                clearScreen();
+            cout << "You crossed path with an enemy who is " << Bloodhound.name << ".\n" << endl;
+            typeText("Are you initiating for a battle? (y/n)\n");
             
+            cout << "\nEnter your choice: ";
+            cin >> choice2;
+
+                if(choice2 == 'y' || choice2 == 'Y'){
+                    clearScreen();
+                    typeText("You are now battling with ");
+                    cout << Bloodhound.name;
+                    typeText("    ");
+                    
+                clearScreen();
+            cout << "\n==================================\n";
+            cout << "=          IN A BATTLE!          =\n";
+            cout << "==================================\n";
+            
+            cout << "----------------------------------\n";
+            cout << "\n- Choose your move!              -" << endl;
+            cout << "----------------------------------\n";
+            cout << "-                                -\n";
+            cout << "- 1. Aim and Shoot               -\n";
+            cout << "- 2. Use Sheild Battery          -\n";
+            cout << "- 3. Use Medkit or Bandage       -\n";
+            cout << "- 4. Use lethal weapon           -\n";
+            cout << "- 5. Use ability                 -\n";
+            cout << "- 6. Run away                    -\n";
+            cout << "-                                -\n";
+            cout << "----------------------------------\n";
+            
+            cout << "Enter a choice: ";
+            cout << choice;
+            
+            
+                }
+                else if(choice2 == 'n' || choice2 == 'N'){
+                    clearScreen();
+                    typeText("You avoided ");
+                    cout << Bloodhound.name;
+                    typeText(" to a battle.");
+                }
+            
+                cout << "\nEnter any key to continue: ";
+                cin >> key;
                 
     return 0;
 }
+
 
 
