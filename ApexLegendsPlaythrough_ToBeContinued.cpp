@@ -227,12 +227,23 @@ int main(){
                     typeText("    ");
                     
                 clearScreen();
+            cout << "\n-------------------------" << endl;
+            cout << "    Enemy Bloodhound" << endl;
+            cout << "-------------------------\n" << endl;
+            cout << "Character: " << Bloodhound.name << endl;
+            cout << "Class: " << Bloodhound.class2 << endl;
+            cout << "Abilities: " << Bloodhound.abilities2 << endl;
+            cout << "Health: " << Bloodhound.health2 << endl;
+            cout << "Gear HP: " << Bloodhound.gearHP2 << endl;
+            cout << "Current Weapon: " << Bloodhound.currentWeapon << ".\n" << endl;
+            
+            
             cout << "\n==================================\n";
             cout << "=          IN A BATTLE!          =\n";
             cout << "==================================\n";
             
             cout << "----------------------------------\n";
-            cout << "\n- Choose your move!              -" << endl;
+            cout << "-        Choose your move!       -\n";
             cout << "----------------------------------\n";
             cout << "-                                -\n";
             cout << "- 1. Aim and Shoot               -\n";
@@ -247,6 +258,9 @@ int main(){
             cout << "Enter a choice: ";
             cout << choice;
             
+                if(choice == 1){
+                    
+                }
             
                 }
                 else if(choice2 == 'n' || choice2 == 'N'){
@@ -261,6 +275,7 @@ int main(){
                 
     return 0;
 }
+
 
 
 
