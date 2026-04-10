@@ -77,25 +77,6 @@ int main(){
         Pathfinder.health1          = 100;
         Pathfinder.gearHP1           = 100;
         Pathfinder.currentWeapon    = "Havoc";
-    
-    
-    Enemy Revenant;
-        Revenant.name             = "Revenant";
-        Revenant.class2           = "Synthetic Nightmare";
-        Revenant.abilities2       = "Forged Shadows";
-        Revenant.health2          = 100;
-        Revenant.gearHP2           = 100;
-        Revenant.currentWeapon    = "Havoc";
-        Revenant.lootDrop         = "Havoc   Backpack   Phoenix Kit   Med Kit";
-    
-    Enemy Crypto;
-        Crypto.name             = "Crypto";
-        Crypto.class2           = "Surveillance Expert";
-        Crypto.abilities2       = "Surveillance Drone";
-        Crypto.health2          = 100;
-        Crypto.gearHP2           = 100;
-        Crypto.currentWeapon    = "Sentinel";
-        Crypto.lootDrop         = "Sentinel   Arc Star   Sheild Battery   Sniper Ammo";
         
     Enemy Bloodhound;
         Bloodhound.name            = "Bloodhound";
@@ -113,7 +94,7 @@ int main(){
         Map.numberOfEnemies     = 56;
         
         
-                string area;
+        string area;
         string zoneArea;
         bool isZoneSafe;
         int numberOfEnemies;
@@ -222,45 +203,158 @@ int main(){
 
                 if(choice2 == 'y' || choice2 == 'Y'){
                     clearScreen();
-                    typeText("You are now battling with ");
+                    cout << "You are now battling with ";
                     cout << Bloodhound.name;
                     typeText("    ");
-                    
-                clearScreen();
-            cout << "\n-------------------------" << endl;
-            cout << "    Enemy Bloodhound" << endl;
-            cout << "-------------------------\n" << endl;
-            cout << "Character: " << Bloodhound.name << endl;
-            cout << "Class: " << Bloodhound.class2 << endl;
-            cout << "Abilities: " << Bloodhound.abilities2 << endl;
-            cout << "Health: " << Bloodhound.health2 << endl;
-            cout << "Gear HP: " << Bloodhound.gearHP2 << endl;
-            cout << "Current Weapon: " << Bloodhound.currentWeapon << ".\n" << endl;
+
+            Legends * player;
+            
+            if(choice == 1) player = &octane;
+            else if(choice == 2) player = &Wraith;
+            else if(choice == 3) player = &Pathfinder;
             
             
-            cout << "\n==================================\n";
-            cout << "=          IN A BATTLE!          =\n";
-            cout << "==================================\n";
+            while(player -> health1 > 0 && Bloodhound.health2 > 0){
             
-            cout << "----------------------------------\n";
-            cout << "-        Choose your move!       -\n";
-            cout << "----------------------------------\n";
-            cout << "-                                -\n";
-            cout << "- 1. Aim and Shoot               -\n";
-            cout << "- 2. Use Sheild Battery          -\n";
-            cout << "- 3. Use Medkit or Bandage       -\n";
-            cout << "- 4. Use lethal weapon           -\n";
-            cout << "- 5. Use ability                 -\n";
-            cout << "- 6. Run away                    -\n";
-            cout << "-                                -\n";
-            cout << "----------------------------------\n";
+                cout << "\n==================================\n";
+                cout << "=          IN A BATTLE!          =\n";
+                cout << "==================================\n";
             
-            cout << "Enter a choice: ";
-            cout << choice;
+                cout << "\nYour Health: " << player -> health1;
+                cout << "\nYour Shield: " << player -> gearHP1;
+            
+                cout << "\nEnemy Health: " << Bloodhound.health2;
+                cout << "\nEnemy Shield: " << Bloodhound.gearHP2 << "\n";
+            
+                cout << "----------------------------------\n";
+                cout << "-        Choose your move!       -\n";
+                cout << "----------------------------------\n";
+                cout << "- 1. Aim and Shoot               -\n";
+                cout << "- 2. Use Shield Battery          -\n";
+                cout << "- 3. Use Medkit or Bandage       -\n";
+                cout << "- 4. Use lethal weapon           -\n";
+                cout << "- 5. Use ability                 -\n";
+                cout << "- 6. Run away                    -\n";
+                cout << "----------------------------------\n";
+            
+                cout << "Enter a choice: ";
+                cin >> choice;
             
                 if(choice == 1){
-                    
+                    int damage = 70;
+            
+                    if(Bloodhound.gearHP2 > 0){
+                        Bloodhound.gearHP2 -= damage;
+                        if(Bloodhound.gearHP2 < 0){
+                            Bloodhound.health2 += Bloodhound.gearHP2;
+                            Bloodhound.gearHP2 = 0;
+                        }
+                    }
+                    else{
+                        Bloodhound.health2 -= damage;
+                    }
+            
+                    cout << "\nYou dealt " << damage << " damage!\n";
                 }
+                else if(choice == 2){
+                    player -> gearHP1 += 60;
+                    if(player -> gearHP1 > 100) player -> gearHP1 = 100;
+                    cout << "\nShield restored by 60!\n";
+                }
+                else if(choice == 3){
+                    player -> health1 += 100;
+                    if(player -> health1 > 100) player -> health1 = 100;
+                    cout << "\nYou healed 100 HP!\n";
+                }
+                else if(choice == 4){
+                    int damage = 25;
+            
+                    if(Bloodhound.gearHP2 > 0){
+                        Bloodhound.gearHP2 -= damage;
+                        if(Bloodhound.gearHP2 < 0){
+                            Bloodhound.health2 += Bloodhound.gearHP2;
+                            Bloodhound.gearHP2 = 0;
+                        }
+                    }
+                    else{
+                        Bloodhound.health2 -= damage;
+                    }
+            
+                    cout << "\nCritical hit! " << damage << " damage!\n";
+                }
+                else if(choice == 5){
+                    int damage = 30;
+            
+                    if(Bloodhound.gearHP2 > 0){
+                        Bloodhound.gearHP2 -= damage;
+                        if(Bloodhound.gearHP2 < 0){
+                            Bloodhound.health2 += Bloodhound.gearHP2;
+                            Bloodhound.gearHP2 = 0;
+                        }
+                    }
+                    else{
+                        Bloodhound.health2 -= damage;
+                    }
+            
+                    cout << "\nUsed ability (" << player -> abilities1 << ")! " << damage << " damage!\n";
+                }
+                else if(choice == 6){
+                    cout << "\nYou ran away from the battle.\n";
+                    break;
+                }
+                else{
+                    cout << "\nInvalid move!\n";
+                    continue;
+                }
+            
+                // Enemy turn
+                if(Bloodhound.health2 > 0){
+                    int enemyDamage = 65;
+            
+                    if(player -> gearHP1 > 0){
+                        player -> gearHP1 -= enemyDamage;
+                        if(player -> gearHP1 < 0){
+                            player -> health1 += player->gearHP1;
+                            player -> gearHP1 = 0;
+                        }
+                    }
+                    else{
+                        player -> health1 -= enemyDamage;
+                    }
+            
+                    cout << "Enemy dealt " << enemyDamage << " damage to you!\n";
+                }
+            
+                // Prevent negatives
+                if(player -> health1 < 0) player -> health1 = 0;
+                if(Bloodhound.health2 < 0) Bloodhound.health2 = 0;
+            
+                cout << "\nPress any key to continue...";
+                cin >> key;
+            }
+            
+            // Result
+            clearScreen();
+            
+            if(choice == 6){
+                cout << "\n==================================\n";
+                cout << "=             FLED               =\n";
+                cout << "==================================\n";
+                cout << "\nYou escaped from " << Bloodhound.name << ".\n";
+            }
+            else if(player -> health1 <= 0){
+                cout << "\n==================================\n";
+                cout << "=            DEFEAT              =\n";
+                cout << "==================================\n";
+                cout << "\nYou were defeated by " << Bloodhound.name << "...\n";
+            }
+            else if(Bloodhound.health2 <= 0){
+                cout << "\n==================================\n";
+                cout << "=            VICTORY             =\n";
+                cout << "==================================\n";
+                cout << "\nYou defeated " << Bloodhound.name << "!\n";
+                cout << "Loot Acquired: " << Bloodhound.lootDrop << endl;
+            }
             
                 }
                 else if(choice2 == 'n' || choice2 == 'N'){
@@ -272,7 +366,8 @@ int main(){
             
                 cout << "\nEnter any key to continue: ";
                 cin >> key;
-                
+
+            
     return 0;
 }
 
