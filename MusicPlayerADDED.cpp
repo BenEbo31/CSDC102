@@ -247,54 +247,58 @@ private:
     // Live playback timer  
     // Counts up second by second with a progress bar.
     // Press any key to stop immediately (non-blocking via termios + select).
-    void runTimer(Song s) {
-        int total    = s.durationInSeconds();
-        int elapsed  = 0;
+void runTimer(Song s){
+        int total = s.durationInSeconds();
+        int elapsed = 0;
         int barWidth = 30;
 
-        cout << "\n  Press any key to stop...\n\n";
+        bool paused = false;
 
-        setRawMode(true); // Enable raw mode so keypresses are instant
+            cout << "\n===================\n";
+            cout << "[P] Pause/Resume\n";
+            cout << "[Any Key] Stop\n\n";
 
-        while (elapsed <= total) {
+        setRawMode(true);
+
+        while(elapsed <= total){
             int eMin = elapsed / 60, eSec = elapsed % 60;
-            int tMin = total   / 60, tSec = total   % 60;
+            int tMin = total / 60, tSec = total % 60;
             int filled = (total > 0) ? (elapsed * barWidth / total) : barWidth;
 
-            cout << "\r  "
-                 << (eMin < 10 ? "0" : "") << eMin << ":"
-                 << (eSec < 10 ? "0" : "") << eSec
-                 << "  [";
+                cout << "\r  "
+                     << (eMin < 10 ? "0" : "") << eMin << ":"
+                     << (eSec < 10 ? "0" : "") << eSec
+                     << "  [";
             for (int i = 0; i < barWidth; i++) cout << (i < filled ? '#' : '-');
-            cout << "]  "
-                 << (tMin < 10 ? "0" : "") << tMin << ":"
-                 << (tSec < 10 ? "0" : "") << tSec
-                 << "   " << flush;
+                cout << "]  "
+                     << (tMin < 10 ? "0" : "") << tMin << ":"
+                     << (tSec < 10 ? "0" : "") << tSec
+                     << "   " << flush;
 
-            if (elapsed == total) break;
-
-            // Check every 100ms for 10 ticks = 1 second total
-            bool stopped = false;
-            for (int tick = 0; tick < 10; tick++) {
-                if (keyPressed()) {
+                if(paused)
+                    cout << "    [PAUSED]";
+                    cout << "    " << flush;
+            
+            for(int tick = 0; tick < 10; tick++){
+                if(keyPressed()){
                     char c;
-                    read(STDIN_FILENO, &c, 1); // consume the keypress
-                    stopped = true;
-                    break;
+                    read(STDIN_FILENO, &c, 1);
+                    if(c == 'p' || c == 'P'){
+                        paused = !paused;
+    
+                    }
+                    else{
+                        setRawMode(false);
+                            cout << "\n\n   [STOPPED]\n";
+                            return;
+                    }
                 }
-                usleep(100000); // 100ms
+                usleep(100000);
             }
-
-            if (stopped) {
-                setRawMode(false);
-                cout << "\n\n  [STOPPED]\n";
-                return;
-            }
-            elapsed++;
+            if(!paused) elapsed++;
         }
-
         setRawMode(false);
-        cout << "\n\n  [DONE] Finished playing.\n";
+            cout << "\n\n   [Finished Playing]\n";
     }
 
 public:
@@ -541,28 +545,28 @@ public:
             cout << "=== Select Song ===\n";
             cout << "(use W/S + Enter)\n\n";
 
-            Node* t = head;
+            Node* cursor = head;
             int i = 1;
 
             do{
-                if(t == temp)
+                if(cursor == temp)           // Acts as the cursor to select specific choice
                     cout << " >> ";
                 else
                     cout << "     ";
 
-                cout << i++ << ". " << t -> song.title << "\n";
-                t = t -> next;
+                cout << i++ << ". " << cursor -> song.title << "\n";      //Lists the whole playlist
+                cursor = cursor -> next;
             }
-            while(t != head);
+            while(cursor != head);
             if(keyPressed()){
-                char c;
-                read(STDIN_FILENO, &c, 1);
+                char move;
+                read(STDIN_FILENO, &move, 1);
 
-                if(c == 'w')
+                if(move == 'w')
                     temp = temp -> prev;
-                else if(c == 's')
+                else if(move == 's')
                     temp = temp -> next;
-                else if(c == '\n')
+                else if(move == '\n')
 
                 break;
             }
